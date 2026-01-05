@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPDB SMK Al-Hidayah Lestari 2026</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#14532d',  /* Hijau Tua - Primary */
+                            light: '#16a34a', /* Hijau Muda - Secondary */
+                            gold: '#facc15',  /* Kuning Emas - Accent */
+                            goldHover: '#eab308',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles mimicking the pentagonal/curved feel */
+        .clip-pentagon-card {
+            border-radius: 20px 4px 20px 4px;
+        }
+        
+        .hero-pattern {
+            background-color: #14532d;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-shine:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50">
+
+    <!-- NAVIGATION -->
+    <nav class="bg-brand-dark fixed w-full z-50 shadow-lg transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center relative z-50">
+                <!-- Logo Area -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-brand-dark shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-graduation-cap text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-heading font-bold text-white text-lg leading-tight">SMK AL-HIDAYAH</h1>
+                        <p class="text-brand-gold text-xs font-medium tracking-wider">LESTARI</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#beranda" class="text-gray-200 hover:text-brand-gold font-medium transition">Beranda</a>
+                    <a href="#profil" class="text-gray-200 hover:text-brand-gold font-medium transition">Profil</a>
+                    <a href="#jurusan" class="text-gray-200 hover:text-brand-gold font-medium transition">Jurusan</a>
+                    <a href="#alur" class="text-gray-200 hover:text-brand-gold font-medium transition">Alur Daftar</a>
+                    <a href="#daftar-sekarang" class="bg-brand-gold hover:bg-brand-goldHover text-black font-bold py-2 px-6 rounded-full shadow-md transform hover:-translate-y-0.5 transition btn-shine">
+                        Daftar Sekarang
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-brand-gold focus:outline-none p-2" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown (Improved for Mobile) -->
+            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-dark border-t border-green-800 shadow-xl origin-top animate-fade-in">
+                <div class="px-4 py-6 space-y-3 shadow-inner">
+                    <a href="#beranda" class="block py-3 px-4 rounded-lg hover:bg-white/10 text-gray-200 hover:text-brand-gold transition border-b border-green-800/50">Beranda</a>
+                    <a href="#profil" class="block py-3 px-4 rounded-lg hover:bg-white/10 text-gray-200 hover:text-brand-gold transition border-b border-green-800/50">Profil</a>
+                    <a href="#jurusan" class="block py-3 px-4 rounded-lg hover:bg-white/10 text-gray-200 hover:text-brand-gold transition border-b border-green-800/50">Jurusan</a>
+                    <a href="#alur" class="block py-3 px-4 rounded-lg hover:bg-white/10 text-gray-200 hover:text-brand-gold transition border-b border-green-800/50">Alur Pendaftaran</a>
+                    <a href="#daftar-sekarang" class="block mt-6 text-center bg-brand-gold text-black font-bold py-3 rounded-lg shadow-md hover:bg-brand-goldHover">Daftar Sekarang</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="beranda" class="relative pt-28 pb-16 lg:pt-32 lg:pb-28 hero-pattern overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                <!-- Text Content -->
+                <div class="lg:w-1/2 text-center lg:text-left text-white order-2 lg:order-1">
+                    <span class="inline-block px-3 py-1 bg-brand-light bg-opacity-20 border border-brand-light rounded-full text-brand-gold text-xs lg:text-sm font-semibold mb-4">
+                        <i class="fa-solid fa-calendar-check mr-2"></i>PPDB Semester Ganjil 2026 Dibuka
+                    </span>
+                    <!-- Responsive Text: Smaller on mobile, Larger on desktop -->
+                    <h1 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4 lg:mb-6">
+                        Mewujudkan Generasi <br> <span class="text-brand-gold">Berakhlak Mulia</span> & Berprestasi
+                    </h1>
+                    <p class="text-gray-200 text-base lg:text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Bergabunglah dengan SMK Al-Hidayah Lestari. Sekolah vokasi modern dengan basis religius yang kuat.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full sm:w-auto">
+                        <a href="#daftar-sekarang" class="bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-bold py-3 px-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition text-center btn-shine w-full sm:w-auto">
+                            Daftar Online
+                        </a>
+                        <a href="#jurusan" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-brand-dark font-semibold py-3 px-8 rounded-lg transition text-center w-full sm:w-auto">
+                            Lihat Jurusan
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="lg:w-1/2 relative order-1 lg:order-2 mb-8 lg:mb-0 w-full">
+                    <div class="relative z-10 bg-white p-2 rounded-2xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+                        <!-- Placeholder for School Image -->
+                        <div class="bg-gray-200 rounded-xl h-56 sm:h-64 lg:h-80 w-full flex items-center justify-center overflow-hidden">
+                             <img src="/api/placeholder/600/400" alt="Siswa SMK Al-Hidayah" class="object-cover w-full h-full" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'">
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-16 h-16 lg:w-24 lg:h-24 bg-brand-gold rounded-full opacity-50 blur-xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-20 h-20 lg:w-32 lg:h-32 bg-brand-light rounded-full opacity-50 blur-xl"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wave Divider -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[30px] lg:h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="fill-gray-50"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- CEK STATUS QUICK ACCESS -->
+    <section class="relative -mt-12 lg:-mt-16 z-20 px-4 mb-16 lg:mb-20">
+        <div class="container mx-auto max-w-4xl">
+            <div class="bg-white rounded-xl shadow-card p-6 md:p-8 clip-pentagon-card border-l-4 border-brand-gold">
+                <h3 class="font-heading text-lg lg:text-xl font-bold text-brand-dark mb-4 flex items-center">
+                    <i class="fa-solid fa-magnifying-glass mr-2 text-brand-gold"></i> Cek Status Pendaftaran
+                </h3>
+                <form id="checkStatusForm" class="flex flex-col md:flex-row gap-4" onsubmit="handleCheckStatus(event)">
+                    <div class="flex-grow">
+                        <label for="nisn_check" class="sr-only">NISN / No. Registrasi</label>
+                        <input type="text" id="nisn_check" placeholder="Masukkan NISN atau Nomor Registrasi..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-light focus:ring-2 focus:ring-brand-light focus:outline-none transition">
+                    </div>
+                    <button type="submit" class="bg-brand-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-opacity-90 transition shadow-md w-full md:w-auto">
+                        Cek Sekarang
+                    </button>
+                </form>
+                <div id="statusResult" class="hidden mt-4 p-4 bg-blue-50 text-blue-800 rounded-lg text-sm border border-blue-200">
+                    <!-- Result will appear here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFIL SEKOLAH (Singkat) -->
+    <section id="profil" class="py-12 lg:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10 lg:mb-12">
+                <h2 class="font-heading text-2xl lg:text-3xl font-bold text-brand-dark mb-2">Mengapa Memilih Kami?</h2>
+                <div class="w-16 lg:w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-card transition text-center border-t-4 border-brand-light group">
+                    <div class="w-16 h-16 bg-green-100 text-brand-dark rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-dark group-hover:text-brand-gold transition">
+                        <i class="fa-solid fa-quran text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Berbasis Religius</h3>
+                    <p class="text-gray-600 text-sm">Pendidikan karakter yang mengutamakan akhlak mulia dan nilai-nilai keislaman.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-card transition text-center border-t-4 border-brand-gold group">
+                    <div class="w-16 h-16 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-gold group-hover:text-brand-dark transition">
+                        <i class="fa-solid fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Fasilitas Modern</h3>
+                    <p class="text-gray-600 text-sm">Laboratorium komputer terkini, bengkel praktik standar, dan akses internet cepat.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-card transition text-center border-t-4 border-brand-light group">
+                    <div class="w-16 h-16 bg-green-100 text-brand-dark rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-dark group-hover:text-brand-gold transition">
+                        <i class="fa-solid fa-trophy text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Berprestasi</h3>
+                    <p class="text-gray-600 text-sm">Mencetak lulusan yang kompeten, siap kerja, dan memiliki daya saing tinggi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JURUSAN -->
+    <section id="jurusan" class="py-12 lg:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-10 gap-4">
+                <div>
+                    <h2 class="font-heading text-2xl lg:text-3xl font-bold text-brand-dark mb-2">Kompetensi Keahlian</h2>
+                    <p class="text-gray-600 text-sm lg:text-base">Pilih jurusan sesuai minat dan bakatmu.</p>
+                </div>
+                <a href="#" class="text-brand-light font-semibold hover:text-brand-dark text-sm lg:text-base">Lihat Detail <i class="fa-solid fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <!-- Grid Responsive -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card Jurusan 1 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group clip-pentagon-card">
+                    <div class="h-48 bg-gray-300 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="TKJ" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-brand-dark bg-opacity-30 group-hover:bg-opacity-10 transition"></div>
+                        <span class="absolute top-4 right-4 bg-brand-gold text-black text-xs font-bold px-3 py-1 rounded-full">Favorit</span>
+                    </div>
+                    <div class="p-6 relative">
+                        <div class="absolute -top-8 left-6 w-14 h-14 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-brand-gold">
+                            <i class="fa-solid fa-network-wired text-brand-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-brand-dark mt-4 mb-2">Teknik Komputer & Jaringan</h3>
+                        <p class="text-gray-600 text-sm mb-4">Menguasai instalasi jaringan, administrasi server, dan keamanan siber.</p>
+                        <ul class="text-xs text-gray-500 mb-6 space-y-1">
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Lab Fiber Optik</li>
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Sertifikasi Mikrotik</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card Jurusan 2 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group clip-pentagon-card">
+                    <div class="h-48 bg-gray-300 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Akuntansi" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-brand-dark bg-opacity-30 group-hover:bg-opacity-10 transition"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div class="absolute -top-8 left-6 w-14 h-14 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-brand-gold">
+                            <i class="fa-solid fa-calculator text-brand-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-brand-dark mt-4 mb-2">Akuntansi Keuangan</h3>
+                        <p class="text-gray-600 text-sm mb-4">Ahli dalam pembukuan, perpajakan, dan pengelolaan keuangan perusahaan modern.</p>
+                        <ul class="text-xs text-gray-500 mb-6 space-y-1">
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Lab Komputer Akuntansi</li>
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Bank Mini Sekolah</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card Jurusan 3 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group clip-pentagon-card">
+                    <div class="h-48 bg-gray-300 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="OTKP" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-brand-dark bg-opacity-30 group-hover:bg-opacity-10 transition"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div class="absolute -top-8 left-6 w-14 h-14 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-brand-gold">
+                            <i class="fa-solid fa-building text-brand-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-brand-dark mt-4 mb-2">Manajemen Perkantoran</h3>
+                        <p class="text-gray-600 text-sm mb-4">Profesional dalam administrasi perkantoran, komunikasi bisnis, dan arsip digital.</p>
+                        <ul class="text-xs text-gray-500 mb-6 space-y-1">
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Simulasi Perkantoran</li>
+                            <li><i class="fa-solid fa-check text-brand-light mr-1"></i> Public Speaking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALUR PENDAFTARAN -->
+    <section id="alur" class="py-12 lg:py-16 bg-brand-dark text-white relative">
+        <div class="absolute top-0 right-0 w-48 h-48 lg:w-64 lg:h-64 bg-white opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-10 lg:mb-16">
+                <h2 class="font-heading text-2xl lg:text-3xl font-bold text-white mb-2">Alur Pendaftaran</h2>
+                <p class="text-gray-300 text-sm lg:text-base">5 Langkah mudah menjadi bagian dari keluarga besar kami.</p>
+            </div>
+
+            <!-- Responsive Steps Grid: 1 col (mobile) -> 2 col (tablet) -> 5 col (desktop) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 lg:gap-4">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center mb-4 bg-white text-brand-dark group-hover:bg-brand-gold group-hover:text-black transition duration-300 relative">
+                        <i class="fa-solid fa-user-plus text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full text-xs flex items-center justify-center text-white border border-white">1</span>
+                    </div>
+                    <h4 class="font-bold text-brand-gold mb-1">Daftar Online</h4>
+                    <p class="text-sm lg:text-xs text-gray-300">Isi formulir biodata & pilih jurusan.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center mb-4 bg-transparent text-white group-hover:bg-brand-gold group-hover:text-black transition duration-300 relative">
+                        <i class="fa-solid fa-file-upload text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 w-6 h-6 bg-brand-light rounded-full text-xs flex items-center justify-center text-white border border-white">2</span>
+                    </div>
+                    <h4 class="font-bold text-brand-gold mb-1">Upload Berkas</h4>
+                    <p class="text-sm lg:text-xs text-gray-300">KK, Akta, Ijazah/SKL (PDF/JPG).</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center mb-4 bg-transparent text-white group-hover:bg-brand-gold group-hover:text-black transition duration-300 relative">
+                        <i class="fa-solid fa-magnifying-glass-chart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 w-6 h-6 bg-brand-light rounded-full text-xs flex items-center justify-center text-white border border-white">3</span>
+                    </div>
+                    <h4 class="font-bold text-brand-gold mb-1">Verifikasi</h4>
+                    <p class="text-sm lg:text-xs text-gray-300">Panitia memvalidasi data Anda.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center mb-4 bg-transparent text-white group-hover:bg-brand-gold group-hover:text-black transition duration-300 relative">
+                        <i class="fa-solid fa-bullhorn text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 w-6 h-6 bg-brand-light rounded-full text-xs flex items-center justify-center text-white border border-white">4</span>
+                    </div>
+                    <h4 class="font-bold text-brand-gold mb-1">Pengumuman</h4>
+                    <p class="text-sm lg:text-xs text-gray-300">Cek kelulusan di website.</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="flex flex-col items-center text-center group col-span-1 sm:col-span-2 md:col-span-1 mt-0 sm:mt-6 md:mt-0">
+                    <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center mb-4 bg-transparent text-white group-hover:bg-brand-gold group-hover:text-black transition duration-300 relative">
+                        <i class="fa-solid fa-school text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 w-6 h-6 bg-brand-light rounded-full text-xs flex items-center justify-center text-white border border-white">5</span>
+                    </div>
+                    <h4 class="font-bold text-brand-gold mb-1">Daftar Ulang</h4>
+                    <p class="text-sm lg:text-xs text-gray-300">Lapor diri ke sekolah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORM PENDAFTARAN SECTION (CTA) -->
+    <section id="daftar-sekarang" class="py-16 lg:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+                <!-- Left Side: Image/Info -->
+                <div class="lg:w-1/3 bg-brand-dark p-8 lg:p-10 text-white relative overflow-hidden flex flex-col justify-center">
+                    <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-brand-light opacity-20 rounded-full blur-2xl"></div>
+                    <h3 class="font-heading text-2xl lg:text-3xl font-bold mb-4">Siap Bergabung?</h3>
+                    <p class="text-gray-200 mb-6 text-sm lg:text-base">Pastikan data yang Anda masukkan sesuai dengan dokumen asli.</p>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-brand-gold mr-3"></i> Biaya Pendaftaran Gratis</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-brand-gold mr-3"></i> Proses Cepat & Transparan</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-brand-gold mr-3"></i> Bantuan Teknis via WA</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <p class="text-xs opacity-60">Butuh bantuan?</p>
+                        <a href="#" class="flex items-center text-brand-gold font-bold hover:underline">
+                            <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Hubungi Panitia
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Form -->
+                <div class="lg:w-2/3 p-6 md:p-8 lg:p-12">
+                    <h3 class="text-xl lg:text-2xl font-bold text-brand-dark mb-6 border-b pb-2 border-gray-100">Formulir Pendaftaran Awal</h3>
+                    <form onsubmit="handleRegister(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6">
+                            <!-- Nama -->
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap</label>
+                                <input type="text" class="w-full bg-gray-50 text-gray-700 border border-gray-300 rounded-lg py-3 px-4 focus:bg-white focus:border-brand-light focus:ring-1 focus:ring-brand-light outline-none transition" placeholder="Sesuai Ijazah" required>
+                            </div>
+                            <!-- NISN -->
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">NISN</label>
+                                <input type="number" class="w-full bg-gray-50 text-gray-700 border border-gray-300 rounded-lg py-3 px-4 focus:bg-white focus:border-brand-light focus:ring-1 focus:ring-brand-light outline-none transition" placeholder="10 Digit Angka" required>
+                            </div>
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Email Aktif</label>
+                                <input type="email" class="w-full bg-gray-50 text-gray-700 border border-gray-300 rounded-lg py-3 px-4 focus:bg-white focus:border-brand-light focus:ring-1 focus:ring-brand-light outline-none transition" placeholder="email@contoh.com" required>
+                            </div>
+                            <!-- No HP -->
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">No. WhatsApp (Siswa/Ortu)</label>
+                                <input type="tel" class="w-full bg-gray-50 text-gray-700 border border-gray-300 rounded-lg py-3 px-4 focus:bg-white focus:border-brand-light focus:ring-1 focus:ring-brand-light outline-none transition" placeholder="08..." required>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Pilihan Jurusan Utama</label>
+                            <div class="relative">
+                                <select class="w-full bg-gray-50 text-gray-700 border border-gray-300 rounded-lg py-3 px-4 pr-8 focus:bg-white focus:border-brand-light focus:ring-1 focus:ring-brand-light outline-none transition appearance-none" required>
+                                    <option value="" disabled selected>Pilih Jurusan...</option>
+                                    <option value="TKJ">Teknik Komputer & Jaringan</option>
+                                    <option value="AK">Akuntansi Keuangan</option>
+                                    <option value="OTKP">Manajemen Perkantoran</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end">
+                            <button type="submit" class="w-full md:w-auto bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-bold py-3 px-10 rounded-lg shadow-lg transform hover:-translate-y-1 transition btn-shine">
+                                Lanjut ke Upload Dokumen <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark text-white pt-12 lg:pt-16 pb-8 border-t-4 border-brand-gold">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1: Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-brand-dark">
+                            <i class="fa-solid fa-graduation-cap text-lg"></i>
+                        </div>
+                        <h2 class="font-heading font-bold text-xl">SMK AL-HIDAYAH LESTARI</h2>
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6 max-w-sm">
+                        Membangun generasi cerdas, terampil, dan berakhlak mulia.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-brand-gold hover:text-brand-dark transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-brand-gold hover:text-brand-dark transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-brand-gold hover:text-brand-dark transition"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-brand-gold">Tautan Cepat</h3>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#beranda" class="hover:text-white transition">Beranda</a></li>
+                        <li><a href="#profil" class="hover:text-white transition">Profil Sekolah</a></li>
+                        <li><a href="#jurusan" class="hover:text-white transition">Jurusan</a></li>
+                        <li><a href="#alur" class="hover:text-white transition">Alur Pendaftaran</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-brand-gold">Hubungi Kami</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-location-dot mt-1 mr-3 text-brand-gold"></i>
+                            <span>Jl. Raya Pendidikan No. 123, Kota Harapan</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-brands fa-whatsapp mr-3 text-brand-gold"></i>
+                            <span>0812-3456-7890</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-green-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p class="text-center md:text-left mb-2 md:mb-0">&copy; 2026 SMK Al-Hidayah Lestari. All Rights Reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-white">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Mobile Menu Toggle Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            
+            // Toggle Icon Animation
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+        
+        // Auto-close menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // 2. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-xl');
+                navbar.classList.replace('py-3', 'py-2');
+            } else {
+                navbar.classList.remove('shadow-xl');
+                navbar.classList.replace('py-2', 'py-3');
+            }
+        });
+
+        // 3. Mock Check Status Functionality
+        function handleCheckStatus(e) {
+            e.preventDefault();
+            const nisn = document.getElementById('nisn_check').value;
+            const resultDiv = document.getElementById('statusResult');
+            
+            if (!nisn) {
+                alert("Mohon masukkan NISN terlebih dahulu.");
+                return;
+            }
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Mencari data...';
+            resultDiv.className = "mt-4 p-4 bg-gray-100 text-gray-600 rounded-lg text-sm border border-gray-200 block";
+
+            setTimeout(() => {
+                if (nisn.endsWith('1')) {
+                    resultDiv.className = "mt-4 p-4 bg-green-50 text-green-800 rounded-lg text-sm border border-green-200 block animate-pulse";
+                    resultDiv.innerHTML = `
+                        <div class="font-bold mb-1"><i class="fa-solid fa-check-circle mr-2"></i> Data Ditemukan!</div>
+                        <div>Nama: <strong>Budi Santoso</strong></div>
+                        <div>Status: <span class="bg-green-200 px-2 py-0.5 rounded text-xs font-bold">LULUS SELEKSI BERKAS</span></div>
+                        <div class="mt-2 text-xs">Silakan cek email untuk jadwal wawancara.</div>
+                    `;
+                } else {
+                    resultDiv.className = "mt-4 p-4 bg-yellow-50 text-yellow-800 rounded-lg text-sm border border-yellow-200 block";
+                    resultDiv.innerHTML = `
+                        <div class="font-bold mb-1"><i class="fa-solid fa-circle-info mr-2"></i> Data Tidak Ditemukan / Belum Diverifikasi</div>
+                        <div>Pastikan NISN benar atau hubungi panitia jika sudah mendaftar lebih dari 3x24 jam.</div>
+                    `;
+                }
+            }, 1500);
+        }
+
+        // 4. Mock Registration Alert
+        function handleRegister(e) {
+            e.preventDefault();
+            alert("Terima kasih! Data awal tersimpan. Anda akan diarahkan ke halaman Upload Dokumen (Demo).");
+        }
+    </script>
+</body>
+</html>
